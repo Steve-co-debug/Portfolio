@@ -1,0 +1,32 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global safety net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Common Helpers
+    function isSignedIn() { return request.auth != null; }
+    function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+
+    // Contact Message Validation
+    function isValidContactMessage(msg) {
+      return msg.size() >= 4 && msg.size() <= 5
+        && msg.name is string && msg.name.size() > 0 && msg.name.size() <= 100
+        && msg.email is string && msg.email.size() > 0 && msg.email.size() <= 100 && msg.email.matches('.+@.+\\..+')
+        && (msg.get('subject', '') is string && msg.get('subject', '').size() <= 200)
+        && msg.message is string && msg.message.size() > 0 && msg.message.size() <= 3000
+        && msg.createdAt == request.time;
+    }
+
+    match /contacts/{messageId} {
+      allow create: if isValidContactMessage(incoming());
+      allow get: if false;
+      allow list: if false;
+      allow update, delete: if false;
+    }
+  }
+}
