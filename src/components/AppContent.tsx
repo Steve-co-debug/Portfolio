@@ -101,7 +101,7 @@ export function Projects() {
       name: 'Mobile Trading Journal', 
       tech: 'React / LocalStorage', 
       desc: 'A web-based mobile application trading journal with frontend designed using React, utilizing local storage for data persistence.',
-      link: 'https://gen-lang-client-0371200914.web.app/',
+      link: 'https://tradingjournal-4e8eb.web.app',
       status: 'In Progress',
       color: 'from-blue-500 to-indigo-600',
       showcase: (
@@ -137,7 +137,8 @@ export function Projects() {
       name: 'Cattle Manager',
       tech: 'React Native / Firebase',
       desc: 'A comprehensive livestock management system designed to track health, breeding, and production for farmers.',
-      status: 'Coming Soon',
+      link: 'https://cattle-manager-17ec8.web.app',
+      status: 'In Progress',
       color: 'from-emerald-400 to-teal-500'
     }
   ];
